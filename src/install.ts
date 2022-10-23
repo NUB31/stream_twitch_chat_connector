@@ -31,7 +31,7 @@ async function resetServer() {
     console.log("Downloading main server file");
     await fs.remove("server.exe");
     await download(
-      "https://github.com/NUB31/twitch_musicbot/releases/download/v0.1.0/server.exe",
+      "https://github.com/nub31/twitch_twitch_chat_connector/releases/latest/download/server.exe",
       "./"
     );
   } catch (err) {
