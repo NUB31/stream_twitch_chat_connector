@@ -1,0 +1,8 @@
+{
+  "serverPort": 3570,
+  "dashboardPort": 3550,
+
+  "TWITCH_API_KEY": "oauth:",
+  "TWITCH_BOT_NAME": "",
+  "TWITCH_CHANNEL_NAME": ""
+}
