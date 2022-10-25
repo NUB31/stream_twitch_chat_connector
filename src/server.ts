@@ -10,21 +10,11 @@ async function main() {
   const clientOptions: tmi.Options = {
     options: { debug: true },
     channels: [settings.TWITCH_CHANNEL_NAME],
+    identity: {
+      username: settings.TWITCH_BOT_NAME,
+      password: settings.TWITCH_API_KEY,
+    },
   };
-
-  try {
-    if (
-      settings.TWITCH_API_KEY.split("oauth:").length >= 2 &&
-      settings.TWITCH_API_KEY.split("oauth:")[1] !== ""
-    ) {
-      clientOptions.identity = {
-        username: settings.TWITCH_BOT_NAME,
-        password: settings.TWITCH_API_KEY,
-      };
-    }
-  } catch (err) {
-    console.error(err);
-  }
 
   let client: tmi.Client;
   client = new tmi.Client(clientOptions);
@@ -45,6 +35,21 @@ async function main() {
   client.on("message", async (channel, tags, message, self) => {
     // If message is from the bot, do not do anything
     if (self) return;
+
+    socket.emit(
+      "chat/message",
+      {
+        user: tags["display-name"],
+        message: message,
+        color: tags.color,
+        badges: tags.badges,
+        emotes: tags.emotes,
+      },
+      async (res: any) => {
+        if (!res.message) return;
+        console.log(res.message);
+      }
+    );
 
     // Remove whitespace from the message
     message = message.trim();
