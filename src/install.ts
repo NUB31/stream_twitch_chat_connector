@@ -2,8 +2,11 @@ import defaultSettings from "./bundledAssets/settings.json";
 import download from "download";
 import fs from "fs-extra";
 
+const path = process.env.APPDATA + "\\nub31\\stream\\twitch_chat_connector";
+
 async function setup() {
   try {
+    await fs.mkdirs(path);
     await resetSettings();
     await resetServer();
   } catch (err) {
@@ -17,7 +20,7 @@ async function resetSettings() {
     console.log("Resetting settings");
     await fs.remove("settings.json");
     await fs.writeFile(
-      "settings.json",
+      path + "\\settings.json",
       JSON.stringify(defaultSettings, null, 2)
     );
   } catch (err) {
@@ -32,7 +35,7 @@ async function resetServer() {
     await fs.remove("server.exe");
     await download(
       "https://github.com/nub31/twitch_twitch_chat_connector/releases/latest/download/server.exe",
-      "./"
+      path
     );
   } catch (err) {
     console.error("Something went wrong the server file. ERROR:");
