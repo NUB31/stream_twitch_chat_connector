@@ -18,7 +18,6 @@ async function setup() {
 async function resetSettings() {
   try {
     console.log("Resetting settings");
-    await fs.remove("settings.json");
     await fs.writeFile(
       path + "\\settings.json",
       JSON.stringify(defaultSettings, null, 2)
@@ -32,7 +31,6 @@ async function resetSettings() {
 async function resetServer() {
   try {
     console.log("Downloading main server file");
-    await fs.remove("server.exe");
     await download(
       "https://github.com/nub31/twitch_twitch_chat_connector/releases/latest/download/server.exe",
       path
